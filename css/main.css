@@ -1,0 +1,48 @@
+@font-face {
+  font-family: "AVENGEANCE HEROIC AVENGER.otf";
+  src: local("/fonts/AVENGEANCE HEROIC AVENGER.otf");
+}
+
+body {
+  background: turquoise;
+  font-family: ;
+  text-align: center;
+  color: red;
+}
+
+.cell {
+  background: rgba(133, 248, 172, 0.95);
+  width: 105px;
+  height: 105px;
+  font-size: 1.5em;
+  float: left;
+  border: 2px solid purple;
+  border-radius: 14px;
+  margin: auto;
+
+}
+
+.board {
+  background: #F21545;
+  width: 456px;
+  height: 456px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  border: 3px solid purple;
+  padding: 15px;
+}
+
+.row0 {
+  25px;
+}
+
+.game-container {
+  margin-top: 10px;
+}
+
+.cell > div {
+  background-color: ;
+  margin-top: 36px
+}
