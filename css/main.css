@@ -1,11 +1,12 @@
 @font-face {
-  font-family: "AVENGEANCE HEROIC AVENGER.otf";
-  src: local("/fonts/AVENGEANCE HEROIC AVENGER.otf");
+  font-family: "Avenger";
+  src: url("/fonts/the-fontry_avengeance/AVENGEANCE.otf");
+  /*src: url("/fonts/Comix-Loud.ttf");*/
 }
 
 body {
   background: turquoise;
-  font-family: ;
+  font-family: "Avenger";
   text-align: center;
   color: red;
 }
