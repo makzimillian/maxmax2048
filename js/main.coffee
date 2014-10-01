@@ -6,7 +6,7 @@ randomCellIndices = ->
 
 randomValue = ->
   values = [2, 2, 2, 4]
-  [randomInt](4)
+  values[randomInt(4)]
 
 buildBoard = ->
   # board = []
@@ -19,16 +19,20 @@ buildBoard = ->
 
 generateTile = (board) ->
   value = randomValue()
-  [row,column] = randomCellIndices()
   console.log "randomInt: #{row} | #{column}"
-  board[row][column] = value
-
+  [row,column] = randomCellIndices()
   if board[row][column] is 0
     board[row][column] = value
   else
     generateTile(board)
 
   console.log "generate tile"
+
+showBoard = (board) ->
+  for row in [0..3]
+    for col in [0..3]
+      $(".r#{row}.c#{col} > div").html(':)')
+  console.log "show board"
 
 printArray = (array) ->
   console.log "-- Start --"
@@ -41,6 +45,7 @@ $ ->
   generateTile(newBoard)
   generateTile(newBoard)
   printArray(newBoard)
+  showBoard(newBoard)
     # console.log "i1: ", i1
     # row = []
   # generateTile()
