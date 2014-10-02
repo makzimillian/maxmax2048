@@ -43,24 +43,15 @@ getRow = (r, board) ->
   row = [board[r][0], board[r][1], board[r][2], board[r][3]]
 
 mergeCells = (row, direction) ->
-  console.log 'merge cells'
   if direction is 'right'
     for a in [3...0]
       for b in [a-1..0]
-        console.log a, b
-
-        if row[a] is 0
-          console.log 'cell is 0'
-          break
+        if row[a] is 0 then break
         else if row[a] == row[b]
-        console.log 'cells are the same'
           row[a] *= 2
           row[b] = 0
           break
-        else
-          console.log 'different'
-          break
-
+        else if row[b] isnt 0
   row
 
 console.log mergeCells [4, 2, 0, 2 ], 'right'
