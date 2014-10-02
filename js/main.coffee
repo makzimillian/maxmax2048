@@ -19,8 +19,9 @@ buildBoard = ->
 
 generateTile = (board) ->
   value = randomValue()
+  [row, column] = randomCellIndices()
   console.log "randomInt: #{row} | #{column}"
-  [row,column] = randomCellIndices()
+
   if board[row][column] is 0
     board[row][column] = value
   else
@@ -28,11 +29,50 @@ generateTile = (board) ->
 
   console.log "generate tile"
 
+move = (board, direction) ->
+
+  for i in [0..3]
+    if direction is 'right'
+      row = getRow(i, board)
+      mergeCells()
+      collapseCells()
+
+getRow = (r, board) ->
+  console.log 'get row'
+  #boardArray, index
+  row = [board[r][0], board[r][1], board[r][2], board[r][3]]
+
+mergeCells = (row, direction) ->
+  console.log 'merge cells'
+  if direction is 'right'
+    for a in [3...0]
+      for b in [a-1..0]
+        console.log a, b
+
+        if row[a] is 0
+          console.log 'cell is 0'
+          break
+        else if row[a] == row[b]
+        console.log 'cells are the same'
+          row[a] *= 2
+          row[b] = 0
+          break
+        else
+          console.log 'different'
+          break
+
+  row
+
+console.log mergeCells [4, 2, 0, 2 ], 'right'
+
+collapseCells = ->
+  console.log  'collapse cells'
+
 showBoard = (board) ->
   for row in [0..3]
     for col in [0..3]
-      $(".r#{row}.c#{col} > div").html(':)')
-  console.log "show board"
+      $(".r#{row}.c#{col} > div").html(board[row][col])
+  # console.log "show board"
 
 printArray = (array) ->
   console.log "-- Start --"
@@ -41,12 +81,32 @@ printArray = (array) ->
   console.log  "-- End--"
 
 $ ->
-  newBoard = buildBoard()
-  generateTile(newBoard)
-  generateTile(newBoard)
-  printArray(newBoard)
-  showBoard(newBoard)
+  @board = buildBoard()
+  generateTile(@board)
+  generateTile(@board)
+  printArray(@board)
+  showBoard(@board)
     # console.log "i1: ", i1
     # row = []
-  # generateTile()
-  # generateTile()
+  $('body').keydown (e) =>
+    e.preventDefault()
+
+    key = e.which #(e) == event
+    keys = [37..40]
+
+    if (keys.indexOf key) > -1
+    #continue the game
+      console.log "key: ", key
+      direction = switch key
+        when 37 then 'left'
+        when 38 then 'up'
+        when 39 then 'right'
+        when 40 then 'down'
+      console.log "direction: ", direction
+
+  #try moving
+      move(@board, direction)
+
+    else
+    #do nothing
+
