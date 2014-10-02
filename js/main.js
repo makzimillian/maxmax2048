@@ -59,35 +59,26 @@
   };
 
   mergeCells = function(row, direction) {
-    var a, b, _i, _results;
-    console.log('merge cells');
+    var a, b, _i, _j, _ref;
     if (direction === 'right') {
-      _results = [];
       for (a = _i = 3; _i > 0; a = --_i) {
-        _results.push((function() {
-          var _j, _ref, _results1;
-          _results1 = [];
-          for (b = _j = _ref = a - 1; _ref <= 0 ? _j <= 0 : _j >= 0; b = _ref <= 0 ? ++_j : --_j) {
-            if (row[a] === 0) {
-              break;
-            }
-            if (row[a] === row[b]) {
-              row[a] *= 2;
-              row[b] = 0;
-              break;
-            } else {
-
-            }
-            _results1.push(console.log(a, b));
+        for (b = _j = _ref = a - 1; _ref <= 0 ? _j <= 0 : _j >= 0; b = _ref <= 0 ? ++_j : --_j) {
+          if (row[a] === 0) {
+            break;
+          } else if (row[a] === row[b]) {
+            row[a] *= 2;
+            row[b] = 0;
+            break;
+          } else if (row[b] !== 0) {
+            break;
           }
-          return _results1;
-        })());
+        }
       }
-      return _results;
     }
+    return row;
   };
 
-  mergeCells([4, 4, 2, 0], 'right');
+  console.log(mergeCells([4, 2, 0, 2], 'right'));
 
   collapseCells = function() {
     return console.log('collapse cells');

@@ -51,7 +51,7 @@ mergeCells = (row, direction) ->
           row[a] *= 2
           row[b] = 0
           break
-        else if row[b] isnt 0
+        else if row[b] isnt 0 then break
   row
 
 console.log mergeCells [4, 2, 0, 2 ], 'right'
