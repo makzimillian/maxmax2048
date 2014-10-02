@@ -43,8 +43,9 @@
     for (i = _i = 0; _i <= 3; i = ++_i) {
       if (direction === 'right') {
         row = getRow(i, board);
-        mergeCells();
-        _results.push(collapseCells());
+        row = mergeCells(row, direction);
+        row = collapseCells(row, direction);
+        _results.push(console.log(row));
       } else {
         _results.push(void 0);
       }
@@ -54,7 +55,6 @@
 
   getRow = function(r, board) {
     var row;
-    console.log('get row');
     return row = [board[r][0], board[r][1], board[r][2], board[r][3]];
   };
 
@@ -78,11 +78,19 @@
     return row;
   };
 
-  console.log(mergeCells([4, 2, 0, 2], 'right'));
-
-  collapseCells = function() {
-    return console.log('collapse cells');
+  collapseCells = function(row, direction) {
+    row = row.filter(function(x) {
+      return x !== 0;
+    });
+    if (direction === 'right') {
+      while (row.length < 4) {
+        row.unshift(0);
+      }
+    }
+    return row;
   };
+
+  console.log(collapseCells([2, 0, 4, 0], 'right'));
 
   showBoard = function(board) {
     var col, row, _i, _results;
