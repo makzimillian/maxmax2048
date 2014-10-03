@@ -5,7 +5,7 @@ randomCellIndices = ->
   [randomInt(4), randomInt(4)]
 
 randomValue = ->
-  values = [2, 2, 2, 4]
+  values = [2, 4, 2, 4]
   values[randomInt(4)]
 
 buildBoard = ->
@@ -30,17 +30,25 @@ generateTile = (board) ->
   console.log "generate tile"
 
 move = (board, direction) ->
+  newBoard = buildBoard()
 
   for i in [0..3]
     if direction is 'right'
       row = getRow(i, board)
       row = mergeCells(row, direction)
       row = collapseCells(row, direction)
-      console.log row
+      setRow(row, i, newBoard)
+
+
+  newBoard
 
 getRow = (r, board) ->
   #boardArray, index
   row = [board[r][0], board[r][1], board[r][2], board[r][3]]
+
+setRow = (row, index, board) ->
+  board[index] = row
+
 
 mergeCells = (row, direction) ->
   if direction is 'right'
@@ -66,7 +74,16 @@ collapseCells = (row, direction) ->
 
   row
 
-console.log collapseCells [2, 0, 4, 0], 'right'
+console.log collapseCells [0, 2, 4, 2], 'right'
+
+moveisValid = (orignalBoard, newBoard) ->
+  answer = true
+  for row in [0..3]
+    for col in [0..3]
+      if orignalBoard[row][col] isnt newBoard[row][col]
+        return true
+
+  false
 
 
 showBoard = (board) ->
@@ -103,10 +120,21 @@ $ ->
         when 38 then 'up'
         when 39 then 'right'
         when 40 then 'down'
-      console.log "direction: ", direction
+      # console.log "direction: ", direction
 
   #try moving
-      move(@board, direction)
+      newBoard = move(@board, direction)
+      printArray newBoard
+      #check the move validity, by comparing the original and new boards
+      if  moveisValid(@board, newBoard)
+        console.log "valid"
+        @board = newBoard
+        #generate board
+        generateTile(@board)
+        #show board
+        showBoard(@board)
+      else
+        console.log "invalid"
 
     else
     #do nothing
