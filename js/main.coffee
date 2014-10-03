@@ -33,12 +33,11 @@ move = (board, direction) ->
   newBoard = buildBoard()
 
   for i in [0..3]
-    if direction is 'right'
+    if direction is 'right' or 'left'
       row = getRow(i, board)
       row = mergeCells(row, direction)
       row = collapseCells(row, direction)
       setRow(row, i, newBoard)
-
 
   newBoard
 
@@ -60,6 +59,16 @@ mergeCells = (row, direction) ->
           row[b] = 0
           break
         else if row[b] isnt 0 then break
+  else if direction is 'left'
+    for a in [0...3]
+      for b in [a+1..3]
+        if row[a] is 0 then break
+        else if row[a] == row[b]
+          row[a] *= 2
+          row[b] = 0
+          break
+        else if row[a] is 0 then break
+
   row
 
 # console.log mergeCells [4, 2, 0, 2 ], 'right'
@@ -71,10 +80,12 @@ collapseCells = (row, direction) ->
   if direction is 'right'
     while row.length < 4
       row.unshift 0
-
+  else if direction is 'left'
+    while row.length < 4
+      row.push 0
   row
 
-console.log collapseCells [0, 2, 4, 2], 'right'
+# console.log collapseCells [0, 2, 4, 2], 'right'
 
 moveisValid = (orignalBoard, newBoard) ->
   answer = true
@@ -85,6 +96,22 @@ moveisValid = (orignalBoard, newBoard) ->
 
   false
 
+boardIsFull = (board) ->
+  for row in board
+    if 0 in row
+      return false
+  true
+
+noValidMoves = (board) ->
+  direction = 'right' or 'left' #FIXME: handle other directions
+  newBoard = move(board, direction)
+  if moveisValid(board, newBoard)
+    return false
+  true
+
+
+isGameOver = (board) ->
+  boardIsFull(board) and noValidMoves(board)
 
 showBoard = (board) ->
   for row in [0..3]
@@ -126,16 +153,20 @@ $ ->
       newBoard = move(@board, direction)
       printArray newBoard
       #check the move validity, by comparing the original and new boards
-      if  moveisValid(@board, newBoard)
+      if moveisValid(@board, newBoard)
         console.log "valid"
         @board = newBoard
         #generate board
         generateTile(@board)
         #show board
         showBoard(@board)
+        #check game lost
+        if isGameOver(@board)
+          console.log "Fatality!"
+
       else
         console.log "invalid"
-
+        #invalid move
     else
     #do nothing
 
