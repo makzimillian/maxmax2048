@@ -1,11 +1,11 @@
 randomInt = (x) ->
-    Math.floor(Math.random() * x)
+  Math.floor(Math.random() * x)
 
 randomCellIndices = ->
   [randomInt(4), randomInt(4)]
 
 randomValue = ->
-  values = [2, 4, 2, 4]
+  values = [2, 2, 2, 4]
   values[randomInt(4)]
 
 buildBoard = ->
@@ -14,76 +14,80 @@ buildBoard = ->
   #   board[row] = []
   #   for column in [0..3]
   #     board[row][column] = 0
-  [0..3].map -> [0..3].map (->0)
+  [0..3].map -> ([0..3].map -> 0)
   # console.log board
 
 generateTile = (board) ->
-  value = randomValue()
+  value = 2
   [row, column] = randomCellIndices()
-  console.log "randomInt: #{row} | #{column}"
-
   if board[row][column] is 0
     board[row][column] = value
   else
     generateTile(board)
 
-  console.log "generate tile"
-
 move = (board, direction) ->
   newBoard = buildBoard()
 
   for i in [0..3]
-    if direction is 'right' or 'left'
+    if direction in ['right', 'left']
       row = getRow(i, board)
       row = mergeCells(row, direction)
       row = collapseCells(row, direction)
       setRow(row, i, newBoard)
-
+    else if direction in ['down', 'up']
+      column = getColumn(i, board)
+      column = mergeCells(column, direction)
+      column = collapseCells(column, direction)
+      setColumn(column, i, newBoard)
   newBoard
 
 getRow = (r, board) ->
   #boardArray, index
-  row = [board[r][0], board[r][1], board[r][2], board[r][3]]
+  [board[r][0], board[r][1], board[r][2], board[r][3]]
+
+getColumn  = (c, board) ->
+  [board[0][c], board[1][c], board[2][c], board[3][c]]
+
 
 setRow = (row, index, board) ->
   board[index] = row
 
+setColumn = (column, index, board) ->
+  for i in [0..3]
+    board[i][index] = column[i]
 
-mergeCells = (row, direction) ->
-  if direction is 'right'
+mergeCells = (cells, direction) ->
+
+  merge = (cells) ->
     for a in [3...0]
       for b in [a-1..0]
-        if row[a] is 0 then break
-        else if row[a] == row[b]
-          row[a] *= 2
-          row[b] = 0
+        if cells[a] is 0 then break
+        else if cells[a] == cells[b]
+          cells[a] *= 2
+          cells[b] = 0
           break
-        else if row[b] isnt 0 then break
-  else if direction is 'left'
-    for a in [0...3]
-      for b in [a+1..3]
-        if row[a] is 0 then break
-        else if row[a] == row[b]
-          row[a] *= 2
-          row[b] = 0
-          break
-        else if row[a] is 0 then break
+        else if cells[b] isnt 0 then break
+    cells
 
-  row
+  if direction in ['right', 'down']
+    cells = merge(cells)
+  else if direction in ['left', 'up']
+    cells = merge(cells.reverse()).reverse()
+
+  cells
 
 # console.log mergeCells [4, 2, 0, 2 ], 'right'
 
-collapseCells = (row, direction) ->
+collapseCells = (cells, direction) ->
   #remove '0'
-  row = row.filter (x) -> x isnt 0
+  cells = cells.filter (x) -> x isnt 0
     #adding '0'
-  if direction is 'right'
-    while row.length < 4
-      row.unshift 0
-  else if direction is 'left'
-    while row.length < 4
-      row.push 0
-  row
+  while cells.length < 4
+    if direction in ['right', 'down']
+      cells.unshift 0
+    else if direction in ['left', 'up']
+      cells.push 0
+  cells
 
 # console.log collapseCells [0, 2, 4, 2], 'right'
 
@@ -103,12 +107,11 @@ boardIsFull = (board) ->
   true
 
 noValidMoves = (board) ->
-  direction = 'right' or 'left' #FIXME: handle other directions
-  newBoard = move(board, direction)
-  if moveisValid(board, newBoard)
-    return false
+  for direction in ['up', 'down', 'left', 'right']
+    newBoard = move(board, direction)
+    if moveisValid(board, newBoard)
+      return false
   true
-
 
 isGameOver = (board) ->
   boardIsFull(board) and noValidMoves(board)
@@ -116,7 +119,10 @@ isGameOver = (board) ->
 showBoard = (board) ->
   for row in [0..3]
     for col in [0..3]
-      $(".r#{row}.c#{col} > div").html(board[row][col])
+      if board[row][col] is 0
+        $(".r#{row}.c#{col} > div").html('')
+      else
+        $(".r#{row}.c#{col} > div").html(board[row][col])
   # console.log "show board"
 
 printArray = (array) ->
@@ -134,20 +140,20 @@ $ ->
     # console.log "i1: ", i1
     # row = []
   $('body').keydown (e) =>
-    e.preventDefault()
+
 
     key = e.which #(e) == event
     keys = [37..40]
 
     if (keys.indexOf key) > -1
     #continue the game
-      console.log "key: ", key
+      # console.log "key: ", key
+      e.preventDefault()
       direction = switch key
         when 37 then 'left'
         when 38 then 'up'
         when 39 then 'right'
         when 40 then 'down'
-      # console.log "direction: ", direction
 
   #try moving
       newBoard = move(@board, direction)
