@@ -5,7 +5,8 @@
 }
 
 body {
-  background: turquoise;
+  /*background: "turquoise";*/
+  background-image: url("http://media-cache-ak0.pinimg.com/originals/dc/9c/95/dc9c95ad0d5822f9ace6eaf07a6aea58.jpg");
   font-family: "Avenger";
   text-align: center;
   color: red;

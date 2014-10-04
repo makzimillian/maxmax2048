@@ -141,7 +141,6 @@ $ ->
     # row = []
   $('body').keydown (e) =>
 
-
     key = e.which #(e) == event
     keys = [37..40]
 
