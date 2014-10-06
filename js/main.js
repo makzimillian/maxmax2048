@@ -178,6 +178,30 @@
     return _results;
   };
 
+  showBoard = function(board) {
+    var col, power, row, _i, _results;
+    _results = [];
+    for (row = _i = 0; _i <= 3; row = ++_i) {
+      _results.push((function() {
+        var _j, _k, _results1;
+        _results1 = [];
+        for (col = _j = 0; _j <= 3; col = ++_j) {
+          for (power = _k = 1; _k <= 11; power = ++_k) {
+            $(".r" + row + ".c" + col).removeClass('val-' + Math.pow(2, power));
+          }
+          if (board[row][col] === 0) {
+            _results1.push($(".r" + row + ".c" + col + " > div").html(''));
+          } else {
+            $(".r" + row + ".c" + col + " > div").html(board[row][col]);
+            _results1.push($(".r" + row + ".c" + col).addClass('val-' + board[row][col]));
+          }
+        }
+        return _results1;
+      })());
+    }
+    return _results;
+  };
+
   printArray = function(array) {
     var row, _i, _len;
     console.log("-- Start --");
@@ -194,9 +218,29 @@
     generateTile(this.board);
     printArray(this.board);
     showBoard(this.board);
+    $('.board').hide();
+    $('.board').fadeIn(1900);
+    this.board = buildBoard();
+    $('#startGame').click((function(_this) {
+      return function() {
+        alert('Let the Battle Begin!');
+        _this.board = buildBoard();
+        generateTile(_this.board);
+        generateTile(_this.board);
+        return showBoard(_this.board);
+      };
+    })(this));
+    $('#reset').click((function(_this) {
+      return function() {
+        _this.board = buildBoard();
+        generateTile(_this.board);
+        generateTile(_this.board);
+        return showBoard(_this.board);
+      };
+    })(this));
     return $('body').keydown((function(_this) {
       return function(e) {
-        var direction, key, keys, newBoard;
+        var direction, gameOverMessage, key, keys, newBoard;
         key = e.which;
         keys = [37, 38, 39, 40];
         if ((keys.indexOf(key)) > -1) {
@@ -221,10 +265,9 @@
             generateTile(_this.board);
             showBoard(_this.board);
             if (isGameOver(_this.board)) {
-              return console.log("Fatality!");
+              gameOverMessage = confirm("Fatality!");
+              return document.location = 'http://iambrony.steeph.tp-radio.de/mlp/gif/my-little-pony-friendship-is-magic-brony-rainbow-dash-wins-fatality.gif?1342342818';
             }
-          } else {
-            return console.log("invalid");
           }
         } else {
 

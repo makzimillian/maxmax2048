@@ -123,6 +123,18 @@ showBoard = (board) ->
         $(".r#{row}.c#{col} > div").html('')
       else
         $(".r#{row}.c#{col} > div").html(board[row][col])
+
+showBoard = (board) ->
+  for row in [0..3]
+    for col in [0..3]
+      for power in [1..11]
+        $(".r#{row}.c#{col}").removeClass('val-' + Math.pow(2, power))
+      if board[row][col] is 0
+        $(".r#{row}.c#{col} > div").html('')
+      else
+        $(".r#{row}.c#{col} > div").html(board[row][col])
+        $(".r#{row}.c#{col}").addClass('val-' + board[row][col])
+
   # console.log "show board"
 
 printArray = (array) ->
@@ -137,8 +149,25 @@ $ ->
   generateTile(@board)
   printArray(@board)
   showBoard(@board)
+  $('.board').hide()
+  $('.board').fadeIn(1900)
+
+  @board = buildBoard()
     # console.log "i1: ", i1
     # row = []
+  $('#startGame').click =>
+    alert('Let the Battle Begin!')
+    @board = buildBoard()
+    generateTile(@board)
+    generateTile(@board)
+    showBoard(@board)
+
+  $('#reset').click =>
+    @board = buildBoard()
+    generateTile(@board)
+    generateTile(@board)
+    showBoard(@board)
+
   $('body').keydown (e) =>
 
     key = e.which #(e) == event
@@ -167,10 +196,9 @@ $ ->
         showBoard(@board)
         #check game lost
         if isGameOver(@board)
-          console.log "Fatality!"
+          gameOverMessage = confirm("Fatality!")
+          document.location = 'http://iambrony.steeph.tp-radio.de/mlp/gif/my-little-pony-friendship-is-magic-brony-rainbow-dash-wins-fatality.gif?1342342818'
 
-      else
-        console.log "invalid"
         #invalid move
     else
     #do nothing
