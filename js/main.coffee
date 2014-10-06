@@ -132,7 +132,7 @@ showBoard = (board) ->
       if board[row][col] is 0
         $(".r#{row}.c#{col} > div").html('')
       else
-        $(".r#{row}.c#{col} > div").html(board[row][col])
+        $(".r#{row}.c#{col} > div").hide().html(board[row][col])
         $(".r#{row}.c#{col}").addClass('val-' + board[row][col])
 
   # console.log "show board"
@@ -144,6 +144,13 @@ printArray = (array) ->
   console.log  "-- End--"
 
 $ ->
+  $('#gameOverFatality').hide()
+  $('.board').hide()
+  $('.board').fadeIn(350)
+  @board = buildBoard()
+  generateTile(@board)
+  generateTile(@board)
+
   @board = buildBoard()
   generateTile(@board)
   generateTile(@board)
@@ -151,6 +158,7 @@ $ ->
   showBoard(@board)
   $('.board').hide()
   $('.board').fadeIn(1900)
+
 
   @board = buildBoard()
     # console.log "i1: ", i1
@@ -196,8 +204,8 @@ $ ->
         showBoard(@board)
         #check game lost
         if isGameOver(@board)
-          gameOverMessage = confirm("Fatality!")
-          document.location = 'http://iambrony.steeph.tp-radio.de/mlp/gif/my-little-pony-friendship-is-magic-brony-rainbow-dash-wins-fatality.gif?1342342818'
+            $(".board").fadeOut(2000)
+            $("#gameOverFatality").delay(750).fadeIn(500)
 
         #invalid move
     else

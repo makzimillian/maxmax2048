@@ -192,7 +192,7 @@
           if (board[row][col] === 0) {
             _results1.push($(".r" + row + ".c" + col + " > div").html(''));
           } else {
-            $(".r" + row + ".c" + col + " > div").html(board[row][col]);
+            $(".r" + row + ".c" + col + " > div").hide().html(board[row][col]);
             _results1.push($(".r" + row + ".c" + col).addClass('val-' + board[row][col]));
           }
         }
@@ -213,6 +213,12 @@
   };
 
   $(function() {
+    $('#gameOverFatality').hide();
+    $('.board').hide();
+    $('.board').fadeIn(350);
+    this.board = buildBoard();
+    generateTile(this.board);
+    generateTile(this.board);
     this.board = buildBoard();
     generateTile(this.board);
     generateTile(this.board);
@@ -240,7 +246,7 @@
     })(this));
     return $('body').keydown((function(_this) {
       return function(e) {
-        var direction, gameOverMessage, key, keys, newBoard;
+        var direction, key, keys, newBoard;
         key = e.which;
         keys = [37, 38, 39, 40];
         if ((keys.indexOf(key)) > -1) {
@@ -265,8 +271,8 @@
             generateTile(_this.board);
             showBoard(_this.board);
             if (isGameOver(_this.board)) {
-              gameOverMessage = confirm("Fatality!");
-              return document.location = 'http://iambrony.steeph.tp-radio.de/mlp/gif/my-little-pony-friendship-is-magic-brony-rainbow-dash-wins-fatality.gif?1342342818';
+              $(".board").fadeOut(2000);
+              return $("#gameOverFatality").delay(750).fadeIn(500);
             }
           }
         } else {

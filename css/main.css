@@ -6,7 +6,10 @@
 
 body {
   /*background: "turquoise";*/
-  background-image: url("http://media-cache-ak0.pinimg.com/originals/dc/9c/95/dc9c95ad0d5822f9ace6eaf07a6aea58.jpg");
+  background-image: url("http://graphicpolicy.files.wordpress.com/2013/06/xmen_battleoftheatom_1_variantcho.jpg");
+  /*background-repeat: no-repeat;*/
+  /*background-size: 1000px 1000px;*/
+  /*background-position: center center;*/
   font-family: "Avenger";
   text-align: center;
   color: red;
@@ -48,3 +51,27 @@ body {
   background-color: ;
   margin-top: 36px
 }
+
+#startGame {
+  width: 200px;
+  height: 40px;
+}
+
+#reset {
+  width: 100px;
+  height: 40px;
+}
+
+.val-2 {background: url(/Imagery/SILVER_SURFER.png); }
+.val-4 {background: url(/Imagery/DEADPOOL.png); }
+.val-8 {background: url(/Imagery/CABLE.png); }
+.val-16 {background: url(/Imagery/WOLVERINE.png); }
+.val-32 {background: url(/Imagery/THE_HUMAN_TORCH.png); }
+.val-64 {background: url(/Imagery/GAMBIT.png); }
+.val-128 {background: url(/Imagery/STORM.png); }
+.val-256 {background: url(/Imagery/INVISIBLE WOMAN.png); }
+.val-512 {background: url(/Imagery/ICEMAN.png); }
+.val-1024 {background: url(/Imagery/MISTER_FANTASTIC.png); }
+.val-2048 {background: url(/Imagery/BEAST.png); }
+.val-4096 {background: url(Imagery/JEAN_GREY.png); }
+.val-8192 {background: url(Imagery/DARK_PHOENIX.png); }
