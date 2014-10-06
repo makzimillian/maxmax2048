@@ -7,8 +7,8 @@
 body {
   /*background: "turquoise";*/
   background-image: url("http://graphicpolicy.files.wordpress.com/2013/06/xmen_battleoftheatom_1_variantcho.jpg");
-  /*background-repeat: no-repeat;*/
-  /*background-size: 1000px 1000px;*/
+  background-repeat: no-repeat;
+  background-size: cover;
   /*background-position: center center;*/
   font-family: "Avenger";
   text-align: center;
