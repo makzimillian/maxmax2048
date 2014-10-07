@@ -229,7 +229,7 @@
     this.board = buildBoard();
     $('#startGame').click((function(_this) {
       return function() {
-        alert('Let the Battle Begin!');
+        alert('Let the Games Begin!');
         _this.board = buildBoard();
         generateTile(_this.board);
         generateTile(_this.board);

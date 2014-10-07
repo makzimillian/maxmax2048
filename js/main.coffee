@@ -146,7 +146,7 @@ printArray = (array) ->
 $ ->
   $('#gameOverFatality').hide()
   $('.board').hide()
-  $('.board').fadeIn(350)
+  $('.board').fadeIn(250)
   @board = buildBoard()
   generateTile(@board)
   generateTile(@board)
@@ -164,7 +164,7 @@ $ ->
     # console.log "i1: ", i1
     # row = []
   $('#startGame').click =>
-    alert('Let the Battle Begin!')
+    alert('Let the Games Begin!')
     @board = buildBoard()
     generateTile(@board)
     generateTile(@board)
